@@ -2,7 +2,7 @@ from django.db import models
 
 # TelegramUser Model
 class TelegramUser(models.Model):
-    tg_id = models.BigIntegerField(unique=True)  # Katta qiymatlarni ham saqlash uchun BigIntegerField
+    tg_id = models.BigIntegerField(unique=True)
     full_name = models.CharField(max_length=255)
     username = models.CharField(max_length=255, null=True, blank=True)
 
@@ -13,7 +13,7 @@ class TelegramUser(models.Model):
 # UserCoin Model
 class UserCoin(models.Model):
     user = models.OneToOneField(TelegramUser, on_delete=models.CASCADE, related_name='user_coin')
-    coin = models.PositiveIntegerField(default=0)  # Manfiy bo'lmagan qiymatlar uchun PositiveIntegerField
+    coin = models.PositiveIntegerField(default=0)
     limit = models.PositiveIntegerField(default=500)
     max_coin = models.PositiveIntegerField(default=500)
     add = models.PositiveIntegerField(default=1)

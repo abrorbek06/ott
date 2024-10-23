@@ -1,0 +1,102 @@
+{
+  "1": {
+    "need_coin": 0,
+    "limit": 500,
+    "speed": 1
+  },
+  "2": {
+    "need_coin": 3000,
+    "limit": 1000,
+    "speed": 3
+  },
+  "3": {
+    "need_coin": 6000,
+    "limit": 1500,
+    "speed": 6
+  },
+  "4": {
+    "need_coin": 12000,
+    "limit": 2000,
+    "speed": 12
+  },
+  "5": {
+    "need_coin": 24000,
+    "limit": 2500,
+    "speed": 24
+  },
+  "6": {
+    "need_coin": 48000,
+    "limit": 3000,
+    "speed": 30
+  },
+  "7": {
+    "need_coin": 70000,
+    "limit": 3500,
+    "speed": 40
+  },
+  "8": {
+    "need_coin": 80000,
+    "limit": 4000,
+    "speed": 50
+  },
+  "9": {
+    "need_coin": 90000,
+    "limit": 4500,
+    "speed": 60
+  },
+  "10": {
+    "need_coin": 100000,
+    "limit": 5000,
+    "speed": 70
+  },
+  "11": {
+    "need_coin": 200000,
+    "limit": 5500,
+    "speed": 70
+  },
+  "12": {
+    "need_coin": 300000,
+    "limit": 6000,
+    "speed": 70
+  },
+  "13": {
+    "need_coin": 400000,
+    "limit": 6500,
+    "speed": 70
+  },
+  "14": {
+    "need_coin": 500000,
+    "limit": 7000,
+    "speed": 70
+  },
+  "15": {
+    "need_coin": 600000,
+    "limit": 7500,
+    "speed": 70
+  },
+  "16": {
+    "need_coin": 700000,
+    "limit": 8000,
+    "speed": 70
+  },
+  "17": {
+    "need_coin": 800000,
+    "limit": 8500,
+    "speed": 70
+  },
+  "18": {
+    "need_coin": 900000,
+    "limit": 9000,
+    "speed": 70
+  },
+  "19": {
+    "need_coin": 1000000,
+    "limit": 9500,
+    "speed": 70
+  },
+  "20": {
+    "need_coin": 1100000,
+    "limit": 10000,
+    "speed": 70
+  }
+}

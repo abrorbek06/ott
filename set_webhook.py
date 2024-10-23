@@ -1,5 +1,4 @@
 import os
-
 import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tapswap.settings')
@@ -11,10 +10,11 @@ from tapswap.settings import BACKEND_URL
 
 def web():
     bot.remove_webhook()
-    bot.set_webhook(url=BACKEND_URL)
+    bot.set_webhook(url=f"{BACKEND_URL}name/")
 
 if __name__ == "__main__":
     web()
     info = bot.get_webhook_info()
     print(info)
-    print("allow webhook to: {}".format(BACKEND_URL))
+
+#python3 set_webhook.py

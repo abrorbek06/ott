@@ -30,7 +30,7 @@ def echo_message(message):
             if not user_exists:
                 create_user_data(message)
 
-        bot.send_message(message.chat.id, "Welcome to TabSwap {} !".format(message.from_user.full_name),
+        bot.send_message(message.chat.id, "Welcome to OTT coin {} !".format(message.from_user.full_name),
                          reply_markup=start_inline_btn())
 
     except Exception as e:

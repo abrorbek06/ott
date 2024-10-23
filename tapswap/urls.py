@@ -5,7 +5,7 @@ from tapswap.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', telegram_webhook, name='telegram_webhook'),
+    path('name/', telegram_webhook, name='telegram_webhook'),
 
     path('api/v1/main-page/<int:user_id>/', EarnPageView.as_view()),
     path('api/v1/tasks/<int:user_id>/', TaskPageView.as_view()),

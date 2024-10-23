@@ -11,8 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
-from tutorial.settings import BASE_DIR
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,12 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tapswap',
-    'corsheaders',
     'rest_framework',
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -73,7 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tapswap.wsgi.application'
 
-CORS_ALLOW_ALL_ORIGINS = True
 
 DATABASES = {
     'default': {
@@ -119,11 +115,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 APPEND_SLASH = False
 
 
+# FRONTEND_URL = os.getenv("FRONTEND_URL")
+# BACKEND_URL = os.getenv("BACKEND_URL")
+# TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+# TELEGRAM_BOT_URL = os.getenv("TELEGRAM_BOT_URL")
 
-FRONTEND_HOST = 'https://ba39-213-230-100-111.ngrok-free.app'
-BACKEND_URL = 'https://tabswap.pythonanywhere.com'
 
 
+FRONTEND_HOST = "https://red-frogs-kneel.loca.lt/"
+BACKEND_URL = "https://e021-185-213-229-165.ngrok-free.app"
+TELEGRAM_BOT_TOKEN = "7904327977:AAEdjDAbMIAABYzloipgCPaPcvkQCkQvEVw"
+TELEGRAM_BOT_URL = "https://api.telegram.org/bot"
 
-TELEGRAM_BOT_TOKEN = '7904327977:AAEdjDAbMIAABYzloipgCPaPcvkQCkQvEVw'
-TELEGRAM_BOT_URL = 'TEST_KOMBOT'
+

@@ -14,6 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 import tapswap.botapp.handlers
 from .models import *
+from .src.level import levels
 from .utils import check_member, bot
 
 
@@ -49,7 +50,6 @@ def telegram_webhook(request):
 # EARN PAGE
 class EarnPageView(APIView):
 
-
     def get(self, request, user_id):
         # `UserCoin` modelidagi `user__tg_id` maydoniga mos ravishda foydalanuvchini olish
         user_coin = get_object_or_404(UserCoin, user__tg_id=user_id)
@@ -59,7 +59,7 @@ class EarnPageView(APIView):
             "user_coin": user_coin.coin,
             "add_coin": user_coin.add,
             "max_coin": user_coin.max_coin,
-            "limit_coin": user_coin.limit
+            "limit_coin": user_coin.limit,
         }
         return Response(data, status=status.HTTP_200_OK)
 
@@ -145,20 +145,13 @@ class TaskClaimView(APIView):
         user_coin = get_object_or_404(UserCoin, user__tg_id=user_id)
         task_id = request.query_params.get("task_pk")
 
-        user_task = get_object_or_404(UserTasks, task__pk=int(task_id), user=user_coin)
+        user_task = UserTasks.objects.get(task__pk=int(task_id), user=user_coin)
 
-        if user_task.is_complete and user_task.is_claimed == False:
+        if user_task.is_complete and user_task.is_claimed:
 
             user_coin.coin += user_task.task.coin
             user_coin.save()
-
-            user_task.is_claimed = True
-            user_task.save()
             return Response({"is_claimed": True, "message": "claimed"}, status=status.HTTP_200_OK)
-
-        elif user_task.is_claimed:
-            return Response({"is_claimed": True, "message": "no claimed"}, status=status.HTTP_200_OK)
-
         else:
             return Response({"is_claimed": False}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -244,25 +237,25 @@ class BoostsPageView(APIView):
 
 class BoostersPageView(APIView):
     def put(self, request, user_id):
-        user_coin = get_object_or_404(UserCoin, user__tg_id=user_id)
-
+        user_coin = UserCoin.objects.get(user__tg_id=user_id)
+        max_level = 20
         boost_type = request.query_params.get("type")
-
         if boost_type == "multitap":
             user_coin.add += 1
             boost_type_name = Multitap.objects.get(user=user_coin)
 
         elif boost_type == "energy_limit":
             boost_type_name = EnergyLimit.objects.get(user=user_coin)
-            user_coin.limit *= user_coin.limit
+            user_coin.limit = levels()[str(boost_type_name.level + 1)]["level"]
         else:
             boost_type_name = RechargingSpeed.objects.get(user=user_coin)
-            boost_type_name.recharging_speed *= 1.5
+            boost_type_name.recharging_speed = levels()[str(boost_type_name.level + 1)]["speed"]
 
-        if boost_type_name.get_coin <= user_coin.coin:
+        if boost_type_name.get_coin <= user_coin.coin and boost_type_name.level >= max_level:
             boost_type_name.level += 1
 
-            boost_type_name.get_coin *= 2
+
+            boost_type_name.get_coin = levels()[str(boost_type_name.level + 1)]["need_coin"]
             boost_type_name.save()
 
             user_coin.coin -= boost_type_name.get_coin
@@ -284,6 +277,7 @@ class VoucherPageView(APIView):
 
     def get(self, request, user_id):
         vouchers = Voucher.objects.filter(status=True)
+        voucher_user = VoucherUser.objects.filter(user__tg_id=user_id, is_claimed=True)
         voucher_list = []
         for voucher in vouchers:
             voucher_list.append({
@@ -294,7 +288,7 @@ class VoucherPageView(APIView):
 
             })
         data = {
-            "voucher_count": vouchers.count(),
+            "voucher_count": voucher_user.count(),
             "vouchers": voucher_list,
         }
         return Response(data, status=status.HTTP_200_OK)
@@ -321,7 +315,7 @@ class VoucherPageView(APIView):
                     bot.send_message(user_id, text=f"""
     Assalomu alaykum sizning so'rovingiz qabul qilindi !
     
-    Agar savollar bo'lsa adminlarimizga murojat qiling. 
+    Agar savollar bo'lsa adminlarimizga murojat qiling
     
     {admins}
     """)
@@ -340,5 +334,6 @@ class VoucherPageView(APIView):
                 return Response({"message": "ok"}, status=status.HTTP_200_OK)
 
             return Response({"message": "No coin"}, status=status.HTTP_400_BAD_REQUEST)
+
         except Exception as e:
             return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)

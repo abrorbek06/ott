@@ -6,7 +6,7 @@ from tapswap.settings import FRONTEND_HOST
 
 def start_inline_btn():
     markup = types.InlineKeyboardMarkup()
-    url = f"{FRONTEND_HOST}/telegram-user/"
+    url = f"{FRONTEND_HOST}"
     markup.add(InlineKeyboardButton("Start 💫", web_app=WebAppInfo(url=url)))
     return markup
 
