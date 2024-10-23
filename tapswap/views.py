@@ -321,7 +321,7 @@ class VoucherPageView(APIView):
                     bot.send_message(user_id, text=f"""
     Assalomu alaykum sizning so'rovingiz qabul qilindi !
     
-    Agar savollar bo'lsa adminlarimizga murojat qiling
+    Agar savollar bo'lsa adminlarimizga murojat qiling. 
     
     {admins}
     """)
